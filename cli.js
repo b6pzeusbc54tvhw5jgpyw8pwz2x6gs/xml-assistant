@@ -8,6 +8,7 @@ const find = require('lodash/find')
 program
   .version('0.1.0')
   .command('find', 'find text value by dot notation key')
+  .command('list', 'list dot notation paths')
   .parse(process.argv)
 
 // excution

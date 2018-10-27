@@ -67,4 +67,9 @@
     efjwfwefewofijewofjewxc
     jwfoiejwiofwjefo.weofij
   </certi>
+  <only>
+    <dev>
+      <config>notice msg</config>
+    </dev>
+  </only>
 </config-root>
