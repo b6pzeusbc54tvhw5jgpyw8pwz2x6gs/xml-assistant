@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config-root>
+
+	<db>
+		<!-- use db host instead of ip -->
+		<host>my.db.com</host>
+		<port>3306</port>
+		<username>admin</username>
+		<password>1111</password>
+	</db>
+
+  <!-- application info -->
+  <info>  <!-- info start -->
+		<version>10.0.0</version>
+		<countries>KOR|JPN|USA</countries>
+    <!--
+      multi line
+      comment
+    -->
+		<supportClientVersion>^1.0.0</supportClientVersion>
+  </info>
+
+  <redis>  <!-- info start -->
+    <host>
+      redis
+    </host>
+		<port>1111</port>
+    <!--
+      multi line
+      comment
+    -->
+  </redis>
+
+  <s3><log>my-s3-bucket-name</log></s3>
+
+  <backend>
+    <ip>1.2.3.1</ip>
+    <ip>1.2.3.2</ip>
+    <ip>1.2.3.3</ip>
+    <ip>1.2.3.4</ip>
+  </backend>
+
+  <space>
+    <notice> 
+    </notice>
+  </space>
+
+  <very>
+    <ugly>
+      <xml>
+        <tag>
+          <test>value!!</test></tag>
+    </xml>
+    </ugly>
+  </very>
+
+  <certi>
+    weofijweiofjweofjwofsfk
+    w+efoijwfjweoifjwoeifjw
+    eijfoiwejfiowejfowefijw
+    fwej1ioj21o3123oijio1of
+    ewjweiofjoiwejfioqjwqof
+    ifjweofjweofijweofijwoi
+    ieoiwejfoewjfowfjoewijf
+    w/efjwweofijweoifjweoif
+    efjwfwefewofijewofjewxc
+    jwfoiejwiofwjefo.weofij
+  </certi>
+</config-root>

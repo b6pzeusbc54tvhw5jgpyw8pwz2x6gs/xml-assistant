@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config-root>
+
+	<db>
+		<!-- use db host instead of ip -->
+		<host>prd.db.com</host>
+		<port>3306</port>
+		<username>admin</username>
+		<password>prdpassword1111</password>
+	</db>
+
+  <!-- application info -->
+  <info>  <!-- info start -->
+		<version>9.0.0</version>
+		<countries>KOR|JPN</countries>
+    <!--
+      multi line
+      comment
+    -->
+		<supportClientVersion>1.0.0</supportClientVersion>
+  </info>
+
+  <redis>  <!-- info start -->
+    <host>
+      redis.aws.com
+    </host>
+		<port>1111</port>
+    <!--
+      multi line
+      comment
+    -->
+  </redis>
+
+  <s3><log>my-prd-s3-bucket-name</log></s3>
+
+  <backend>
+    <ip>1.2.3.100</ip>
+    <ip>1.2.3.200</ip>
+    <ip>1.2.3.300</ip>
+    <ip>1.2.3.400</ip>
+  </backend>
+
+  <space>
+    <notice>notice msg
+    </notice>
+  </space>
+
+
+  <only>
+    <prd>
+      <config>notice msg</config>
+    </prd>
+  </only>
+
+  <very>
+    <ugly>
+      <xml>
+        <tag>
+          <test>value!!</test></tag>
+    </xml>
+    </ugly>
+  </very>
+
+  <certi>
+    weofijweiofjweofjwofsfk
+    w+efoijwfjweoifjwoeifjw
+    eijfoiwejfiowejfowefijw
+    fwej1ioj21o3123oijio1of
+    ewjweiofjoiwejfioqjwqof
+    ifjweofjweofijweofijwoi
+    ieoiwejfoewjfowfjoewijf
+    w/efjwweofijweoifjweoif
+    efjwfwefewofijewofjewxc
+    jwfoiejwiofwjefo.weofij
+  </certi>
+</config-root>
