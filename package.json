@@ -1,0 +1,11 @@
+{
+  "name": "xml-config-reader",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Alfred UC <b6pzeusbc54tvhw5jgpyw8pwz2x6gs@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "commander": "^2.19.0"
+  }
+}
