@@ -5,37 +5,11 @@ const program = require('commander')
 const xmldoc = require('xmldoc')
 const find = require('lodash/find')
 
-const findByKey = (xmlConfigArr, key) => {
-  const xmlDocArr = xmlConfigArr.map( filename => {
-    const xmlText = fs.readFileSync(filename, 'utf8')
-    return new xmldoc.XmlDocument(xmlText)
-  })
-  const doc = find( xmlDocArr, xd => !! xd.descendantWithPath(key))
-  if( ! doc ) return
-
-  const foundNode = doc.descendantWithPath(key)
-  const { children } = foundNode
-  if(children.length === 1 && "XmlTextNode" === children[0].constructor.name) {
-    return foundNode.val
-  }
-}
-
 program
   .version('0.1.0')
-  .option('-k, --key [key]', 'Dot notation path')
+  .command('find', 'find text value by dot notation key')
   .parse(process.argv)
 
 // excution
 
-console.log(`xml files: ${program.args}`)
-console.log(`key: ${program.key}`)
-console.log(`---------------------------`)
-
-const xmlConfigArr = program.args
-const { key } = program
-if( key ) {
-  const value = findByKey(xmlConfigArr, program.key)
-  value && console.log(`${key}: ${value}`)
-  !value && console.log(`not found by key: ${key}`)
-}
 
