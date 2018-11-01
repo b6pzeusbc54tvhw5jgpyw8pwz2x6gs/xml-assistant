@@ -8,6 +8,7 @@ const filter = require('lodash/filter')
 const last = require('lodash/last')
 const sum = require('lodash/sum')
 const bounds = require('binary-search-bounds')
+require('colors')
 
 const findByKey = (xmlConfigArr, key) => {
   const xmlDocArr = xmlConfigArr.map( filename => {
@@ -65,18 +66,37 @@ const findByLine = (xmlConfig, line) => {
 }
 
 program
+  .usage('[option] <xml-config-file-paths>')
   .option('-k, --key [key]', 'find text value by dot notation path')
   .option('-l, --line [line]', 'find key path by line number')
-  .parse(process.argv)
 
-console.log(`---------------------------`)
-console.log(`xml files: ${program.args}`)
-console.log(`key: ${program.key}`)
-console.log(`line: ${program.line}`)
-console.log(`---------------------------`)
+program.on('--help', function(){
+  console.log('')
+  console.log('Examples:')
+  console.log('  $ cli-find --help')
+  console.log('  $ cli-find --key db.host my-config.xml')
+  console.log('  $ cli-find -k db.host my-config-*.xml')
+  console.log('  $ cli-find --line 10 my-config.xml')
+  console.log('  $ cli-find --line 11 my-config-prod.xml')
+})
+
+program.parse(process.argv)
 
 const xmlConfigArr = program.args
 const { key, line } = program
+
+if( xmlConfigArr.length < 1 ) {
+  console.log('error: xml config file path(s) is required'.red)
+  program.outputHelp()
+  process.exit(1)
+}
+
+if( ! key && ! line ) {
+  console.log('error: key or line is required'.red)
+  program.outputHelp()
+  process.exit(1)
+}
+
 if( key ) {
   const value = findByKey(xmlConfigArr, key)
   value && console.log(`${key}: ${value}`)
