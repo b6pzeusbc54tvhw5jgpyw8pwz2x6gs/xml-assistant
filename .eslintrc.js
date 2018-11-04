@@ -20,5 +20,12 @@ module.exports = {
     "space-infix-ops": 'off',
     "no-unexpected-multiline": 'error',
   },
+  overrides: [
+    {
+      files: ["*.test.js"],
+      globals: require('eslint-plugin-jest').environments.globals.globals,
+      rules: require('eslint-plugin-jest').rules,
+    }
+  ],
 };
 
