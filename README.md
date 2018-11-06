@@ -1,4 +1,4 @@
-# xml-reader
+# xml-assistant
 
 ## Prerequisite
 - nodejs 8.12.x
@@ -9,15 +9,25 @@
 $ yarn
 ```
 
-## Run
+## Run CLI
 
 ```sh
-$ node cli.js <xml paths> [xml paths...] --key <key>
+$ node src/cli.js --help
+$ node src/cli.js find --key <key> <xml-path> [xml-paths...]
+$ node src/cli.js find --line <line> <xml-path>
+$ node src/cli.js list <xml-path> [xml-paths...]
 ```
 
-## Example
+## Examples
 
 ```sh
-$ node cli.js --help
-$ node cli.js exampleXml/* --key db.host
+$ node src/cli.js --help
+$ node src/cli.js find --help
+$ node src/cli.js list --help
+$ node src/cli.js find --key db.host exampleXml/example.xml exampleXml/examplePrd.xml
+$ node src/cli.js find --key db.host exampleXml/*
+$ node src/cli.js find -k db.host exampleXml/*
+$ node src/cli.js find --line 10 exampleXml/example.xml
+$ node src/cli.js find -l 11 exampleXml/examplePrd.xml
+$ node src/cli.js list exampleXml/example.xml exampleXml/examplePrd.xml
 ```
