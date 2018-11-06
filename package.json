@@ -1,8 +1,8 @@
 {
-  "name": "xml-config-reader",
-  "version": "1.0.0",
+  "name": "xml-assistant",
+  "version": "0.1.0",
   "bin": "src/cli.js",
-  "main": "src/index.js",
+  "main": "src/core/index.js",
   "author": "Alfred UC <b6pzeusbc54tvhw5jgpyw8pwz2x6gs@gmail.com>",
   "license": "MIT",
   "private": true,
@@ -15,13 +15,10 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-plugin-rewire": "^1.2.0",
     "binary-search-bounds": "^2.0.4",
     "colors": "^1.3.2",
     "commander": "^2.19.0",
     "dot-object": "^1.7.1",
-    "eslint-plugin-jest": "^21.27.0",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
     "next": "^7.0.2",
@@ -33,6 +30,8 @@
     "xmldoc": "^1.1.2"
   },
   "devDependencies": {
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-plugin-rewire": "^1.2.0",
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
     "babel-jest": "^23.6.0",
@@ -43,6 +42,7 @@
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-jest": "^21.27.0",
     "jest": "^23.6.0",
     "jest-spec-reporter": "^1.0.5",
     "sinon": "^7.1.1"
