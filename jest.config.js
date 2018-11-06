@@ -5,13 +5,17 @@ module.exports = {
   clearMocks: true,
   coverageDirectory: "coverage",
   testEnvironment: "node",
-  //transform: { },
   collectCoverageFrom: [
     'src/**/*.js',
     "!src/.next/**",
     "!**/node_modules/**",
   ],
+  testMatch: ["**/__tests__/**/?(*.)+(spec|test).js?(x)"],
   coveragePathIgnorePatterns: [
     "/node_modules/",
   ],
+  // reporters: ["jest-spec-reporter"],
+  verbose: true,
+  bail: false,
 }
+

@@ -49,7 +49,7 @@
 
   <only>
     <prd>
-      <config>notice msg</config>
+      <config>prd notice msg</config>
     </prd>
   </only>
 
