@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Flex, Box, Button } from 'rebass'
 import dynamic from 'next/dynamic'
+import KeySelector from './KeySelector'
 
 const MonacoEditor = dynamic(import('./MonacoEditor'), { ssr: false })
 
@@ -40,12 +41,17 @@ class XmlConfig extends React.Component {
           <MonacoEditor text={text}/>
         </EditorBox>
         <ToolBox width={[ 1, 0.4 ]}>
+          <div>{`name: ${name}`}</div>
+          <div>{`size: ${size} Byte`}</div>
           <Button>
             <div onClick={this.onClickDelete}>delete!!</div>
           </Button>
-          <div>{`name: ${name}`}</div>
-          <div>{`size: ${size}`}</div>
-          <div>{keyPath}</div>
+          <div style={{ height: 52 }}>
+            <KeySelector
+              xmlConfigArr={[ this.props.xmlConfig ]}
+              keyPath={keyPath}
+            />
+          </div>
           <div>{cursor}</div>
         </ToolBox>
       </ConfigBox>

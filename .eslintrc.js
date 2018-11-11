@@ -33,15 +33,6 @@ module.exports = {
       globals: require('eslint-plugin-jest').environments.globals.globals,
       rules: require('eslint-plugin-jest').rules,
     },
-    {
-      files: [
-        "src/components/*.js",
-        "src/core/*.js",
-      ],
-      env: {
-        browser: true,
-      }
-    }
   ],
 };
 

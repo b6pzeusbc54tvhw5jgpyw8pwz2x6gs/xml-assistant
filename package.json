@@ -26,6 +26,7 @@
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-dropzone": "^7.0.1",
+    "react-select": "^2.1.1",
     "rebass": "^3.0.0-9",
     "store": "^2.0.12",
     "styled-components": "^4.0.3",

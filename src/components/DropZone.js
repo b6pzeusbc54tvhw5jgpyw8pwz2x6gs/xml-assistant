@@ -24,9 +24,8 @@ class DropZone extends React.Component {
   }
   onDrop(files) {
     files.forEach( file => {
-      const reader = new FileReader()
+      const reader = new FileReader()   // eslint-disable-line
       reader.onload = (e) => {
-        console.log(file)
         const { name, size } = file
         this.props.addXmlConfig({ text: e.target.result, name, size })
       }

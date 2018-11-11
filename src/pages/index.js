@@ -36,7 +36,7 @@ const ResetAll = styled(Box)`
 `
 
 const CenteralToolBox = styled.div`
-  height: 60px;
+  height: 52px;
   background-color: rgba(255, 0, 0, 0.28);
 `
 
@@ -44,6 +44,7 @@ class IndexPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      keyPath: '',
       xmlConfigArr: [],
     }
 
@@ -78,14 +79,17 @@ class IndexPage extends React.Component {
   }
   deleteXmlConfig(id) {
     const { xmlConfigArr } = this.state
+
     this.setState({
       xmlConfigArr: reject( xmlConfigArr, xc => xc.id === id ),
     })
   }
-  setAllXmlConfigKeyPath(keyPath) {
+  setAllXmlConfigKeyPath( option ) {
     const { xmlConfigArr } = this.state
-    this.state({
-      xmlConfigArr: xmlConfigArr.map( xmlConfig => ({ ...xmlConfig, keyPath })),
+    const keyPath = option.value
+    this.setState({
+      keyPath,
+      xmlConfigArr: xmlConfigArr.map( xc => ({ ...xc, keyPath })),
     })
   }
 
@@ -100,8 +104,10 @@ class IndexPage extends React.Component {
         <Main px={3}>
           <CenteralToolBox>
             <KeySelector
+              id={'CenteralSelector'}
               xmlConfigArr={state.xmlConfigArr}
-              setAllXmlConfigKeyPath={this.setAllXmlConfigKeyPath}
+              keyPath={this.state.keyPath}
+              onChange={this.setAllXmlConfigKeyPath}
             />
             <ResetAll>
               <div onClick={this.resetAll}>reset all</div>
