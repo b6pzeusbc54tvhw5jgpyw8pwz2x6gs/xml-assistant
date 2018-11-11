@@ -29,6 +29,7 @@
     "rebass": "^3.0.0-9",
     "store": "^2.0.12",
     "styled-components": "^4.0.3",
+    "uniqid": "^5.0.3",
     "xml2js": "^0.4.19",
     "xmldoc": "^1.1.2"
   },

@@ -8,6 +8,7 @@ const BoxComponent = styled(Box)`
   background-color: magenta;
   padding: 16px;
   font-size: 24px;
+  float: left;
 `
 
 class KeySelector extends React.Component {

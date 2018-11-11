@@ -14,12 +14,19 @@ class MonacoEditor extends React.Component {
     this.monacoRef = React.createRef()
   }
   componentDidMount() {
-    monaco.editor.create( this.monacoRef.current, {
+    this.editor = monaco.editor.create( this.monacoRef.current, {
       value: this.props.text,
       language: 'xml',
       theme: 'vs-light',
     })
   }
+  /*
+  componentDidUpdate(prevProps, prevState) {
+    if( prevProps.text !== this.props.text ) {
+      this.editor.setValue(this.props.text)
+    }
+  }
+  */
   render() {
     const { props } = this
     return (

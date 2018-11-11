@@ -7,6 +7,8 @@ import XmlConfig from '../components/XmlConfig'
 import KeySelector from '../components/KeySelector'
 import DropZone from '../components/DropZone'
 import store from '../browser/customStore'
+import uniqid from 'uniqid'
+
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -23,23 +25,32 @@ const Main = styled(Box)`
   background-color: rgba(202, 206, 18, 0.6);
 `
 
+const ResetAll = styled(Box)`
+  background-color: rgba(22, 206, 222, 0.6);
+  float: right;
+  box-sizing: border-box;
+  color: white;
+  padding: 16px;
+  font-size: 24px;
+  cursor: pointer;
+`
+
+const CenteralToolBox = styled.div`
+  height: 60px;
+  background-color: rgba(255, 0, 0, 0.28);
+`
+
 class IndexPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      xmlConfigArr: [
-        {
-          filename: 'a.xml',
-          text: `<?xml><config-root><host>db.host</host></config-root>`,
-          keyPath: 'host',
-          cursor: 10,
-        },
-      ],
+      xmlConfigArr: [],
     }
 
     this.addXmlConfig = this.addXmlConfig.bind(this)
     this.deleteXmlConfig = this.deleteXmlConfig.bind(this)
     this.setAllXmlConfigKeyPath = this.setAllXmlConfigKeyPath.bind(this)
+    this.resetAll = this.resetAll.bind(this)
   }
 
   componentDidMount() {
@@ -56,14 +67,19 @@ class IndexPage extends React.Component {
   }
 
   addXmlConfig(info) {
-    const { filename, text } = info
-    const xmlConfig = { filename, text, keyPath: '', cursor: -1 }
+    const id = uniqid('xmlConfig:')
+    const { name, text, size } = info
+    const xmlConfig = { id, name, text, size, keyPath: '', cursor: -1 }
     this.setState({ xmlConfigArr: [ ...this.state.xmlConfigArr, xmlConfig ]})
   }
-  deleteXmlConfig(info) {
+  resetAll() {
+    this.setState({ xmlConfigArr: [] })
+    store.set('state', this.state)
+  }
+  deleteXmlConfig(id) {
     const { xmlConfigArr } = this.state
-    this.state({
-      xmlConfigArr: reject( xmlConfigArr, xmlConfig => xmlConfig === info ),
+    this.setState({
+      xmlConfigArr: reject( xmlConfigArr, xc => xc.id === id ),
     })
   }
   setAllXmlConfigKeyPath(keyPath) {
@@ -82,13 +98,18 @@ class IndexPage extends React.Component {
           <Heading fontSize={[ 4, 5 ]} color='blue'>Xml Config Reader</Heading>
         </Header>
         <Main px={3}>
-          <KeySelector
-            xmlConfigArr={state.xmlConfigArr}
-            setAllXmlConfigKeyPath={this.setAllXmlConfigKeyPath}
-          />
+          <CenteralToolBox>
+            <KeySelector
+              xmlConfigArr={state.xmlConfigArr}
+              setAllXmlConfigKeyPath={this.setAllXmlConfigKeyPath}
+            />
+            <ResetAll>
+              <div onClick={this.resetAll}>reset all</div>
+            </ResetAll>
+          </CenteralToolBox>
           {state.xmlConfigArr.map( (xmlConfig,i) =>
             <XmlConfig
-              key={i}
+              key={xmlConfig.id}
               xmlConfig={xmlConfig}
               deleteXmlConfig={this.deleteXmlConfig}
             />

@@ -25,15 +25,26 @@ const ToolBox = styled(Box)`
 `
 
 class XmlConfig extends React.Component {
+  constructor(props) {
+    super(props)
+    this.onClickDelete = this.onClickDelete.bind(this)
+  }
+  onClickDelete() {
+    this.props.deleteXmlConfig(this.props.xmlConfig.id)
+  }
   render() {
-    const { text, keyPath, cursor } = this.props.xmlConfig
+    const { text, keyPath, cursor, name, size } = this.props.xmlConfig
     return (
       <ConfigBox width={[ 1 ]}>
         <EditorBox width={[ 1, 0.6 ]}>
           <MonacoEditor text={text}/>
         </EditorBox>
         <ToolBox width={[ 1, 0.4 ]}>
-          <Button>delete</Button>
+          <Button>
+            <div onClick={this.onClickDelete}>delete!!</div>
+          </Button>
+          <div>{`name: ${name}`}</div>
+          <div>{`size: ${size}`}</div>
           <div>{keyPath}</div>
           <div>{cursor}</div>
         </ToolBox>
@@ -43,3 +54,4 @@ class XmlConfig extends React.Component {
 }
 
 export default XmlConfig
+

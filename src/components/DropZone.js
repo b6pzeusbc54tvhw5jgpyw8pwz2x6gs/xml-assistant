@@ -26,7 +26,9 @@ class DropZone extends React.Component {
     files.forEach( file => {
       const reader = new FileReader()
       reader.onload = (e) => {
-        this.props.addXmlConfig({ text: e.target.result })
+        console.log(file)
+        const { name, size } = file
+        this.props.addXmlConfig({ text: e.target.result, name, size })
       }
       reader.readAsText(file)
     })
