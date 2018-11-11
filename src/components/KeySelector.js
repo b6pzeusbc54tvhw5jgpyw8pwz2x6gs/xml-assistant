@@ -11,11 +11,6 @@ const BoxComponent = styled(Box)`
 `
 
 class KeySelector extends React.Component {
-  constructor(props) {
-    super(props)
-    console.log(props.xmlConfigArr)
-  }
-
   render() {
     const { props } = this
     return (
