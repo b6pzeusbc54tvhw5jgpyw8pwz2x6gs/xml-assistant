@@ -6,8 +6,10 @@ const find = require('lodash/find')
 const filter = require('lodash/filter')
 const reject = require('lodash/reject')
 const last = require('lodash/last')
+const first = require('lodash/first')
 const sum = require('lodash/sum')
 const some = require('lodash/some')
+const compact = require('lodash/compact')
 const bounds = require('binary-search-bounds')
 
 const getDotKeyArr = xmlText => new Promise((resolve,reject) => {
@@ -24,22 +26,46 @@ const getUnionedKeyArr = xmlConfigTextArr => {
   return Promise.all(promisedArr).then( rArr => union.apply(null,rArr))
 }
 
+const findNodeInNodeByKey = (node, key) => {
+  // support nodeName, nodeName(withIdx)
+  const keyArr = key.split('.')
+  if( ! node ) return
+  if( compact(keyArr).length < 1 ) return node
+
+  const currentKey = first(keyArr)
+  const matched = currentKey.match(/^([\w\W][\w\W\d]*)\((\d)\)$/)
+  let nextNode
+  if( matched ) {
+    const currentKeyWithoutIdx = matched[1]
+    const idx = matched[2]
+    const children = node.childrenNamed(currentKeyWithoutIdx)
+    nextNode = children[idx]
+  } else {
+    nextNode = node.descendantWithPath(currentKey)
+  }
+  return findNodeInNodeByKey( nextNode, keyArr.slice(1).join('.'))
+}
+
 const findNodeByKey = (xmlConfigTextArr, key) => {
   const xmlDocArr = xmlConfigTextArr.map( t => new xmldoc.XmlDocument(t))
-  const doc = find( xmlDocArr, xd => !! xd.descendantWithPath(key))
-  return doc?.descendantWithPath(key)
+  const xmlDoc = find(xmlDocArr, xd => !! findNodeInNodeByKey(xd, key))
+  return findNodeInNodeByKey(xmlDoc, key)
+}
+
+const getText = (xmlElement) => {
+  if( ! xmlElement) return
+
+  const childArr = reject(xmlElement.children, c => {
+    return c.constructor.name === 'XmlCommentNode'
+  })
+  if( some(childArr, c => c.constructor.name !== 'XmlTextNode')) return
+
+  return childArr.map( c => c.text ).join('')
 }
 
 const findByKey = (xmlConfigTextArr, key) => {
   const foundNode = findNodeByKey( xmlConfigTextArr, key )
-  if( ! foundNode) return
-
-  const children = reject(foundNode.children, c => {
-    return c.constructor.name === 'XmlCommentNode'
-  })
-  if( some(children, c => c.constructor.name !== 'XmlTextNode')) return
-
-  return children.map( c => c.text ).join('')
+  return getText(foundNode)
 }
 
 const findLineByKey = (xmlConfigText, key) => {

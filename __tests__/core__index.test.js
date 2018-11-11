@@ -66,6 +66,25 @@ describe("check findByKey", () => {
     expect(findByKey(xmlConfigTextArr, 'backend.ip(3)')).toBe('1.2.3.4')
   })
 
+  it('can find text value by key in infra', () => {
+    expect(findByKey(xmlConfigTextArr, 'infra')).toBe(void 0)
+    expect(findByKey(xmlConfigTextArr, 'infra.s3')).toBe(void 0)
+    expect(findByKey(xmlConfigTextArr, 'infra.s3.bucket')).toBe('a.b.c')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3.private')).toBe('true')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(0).bucket')).toBe('a.b.c')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(0).private')).toBe('true')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(1).bucket')).toBe('a.b.d')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(1).private')).toBe('true')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(2).bucket')).toBe('a.b.e')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(2).private')).toBe('false')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(3).bucket')).toBe('s3.b1')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(3).private')).toBe('false')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(3).bucket(0)')).toBe('s3.b1')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(3).bucket(1)')).toBe('s3.b2')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(3).bucket(2)')).toBe('s3.b3')
+    expect(findByKey(xmlConfigTextArr, 'infra.s3(3).bucket(3)')).toBe(void 0)
+  })
+
   it('can find text value by key in notice', () => {
     expect(findByKey(xmlConfigTextArr, 'space')).toBe(void 0)
     expect(findByKey(xmlConfigTextArr, 'space.notice').trim()).toBe('')

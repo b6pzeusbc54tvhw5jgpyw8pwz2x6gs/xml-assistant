@@ -53,6 +53,26 @@
     <ip>1.2.3.3</ip>
     <ip>1.2.3.4</ip>
   </backend>
+  <infra>
+    <s3>
+      <bucket>a.b.c</bucket>
+      <private>true</private>
+    </s3>
+    <s3>
+      <bucket>a.b.d</bucket>
+      <private>true</private>
+    </s3>
+    <s3>
+      <bucket>a.b.e</bucket>
+      <private>false</private>
+    </s3>
+    <s3>
+      <bucket>s3.b1</bucket>
+      <bucket>s3.b2</bucket>
+      <bucket>s3.b3</bucket>
+      <private>false</private>
+    </s3>
+  </infra>
 
   <space>
     <notice> 
