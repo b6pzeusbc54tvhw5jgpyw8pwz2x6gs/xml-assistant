@@ -4,8 +4,10 @@ const union = require('lodash/union')
 const xmldoc = require('xmldoc')
 const find = require('lodash/find')
 const filter = require('lodash/filter')
+const reject = require('lodash/reject')
 const last = require('lodash/last')
 const sum = require('lodash/sum')
+const some = require('lodash/some')
 const bounds = require('binary-search-bounds')
 
 const getDotKeyArr = xmlText => new Promise((resolve,reject) => {
@@ -22,16 +24,29 @@ const getUnionedKeyArr = xmlConfigTextArr => {
   return Promise.all(promisedArr).then( rArr => union.apply(null,rArr))
 }
 
-const findByKey = (xmlConfigTextArr, key) => {
+const findNodeByKey = (xmlConfigTextArr, key) => {
   const xmlDocArr = xmlConfigTextArr.map( t => new xmldoc.XmlDocument(t))
   const doc = find( xmlDocArr, xd => !! xd.descendantWithPath(key))
-  if( ! doc ) return
+  return doc?.descendantWithPath(key)
+}
 
-  const foundNode = doc.descendantWithPath(key)
-  const { children } = foundNode
-  if(children.length === 1 && children[0].constructor.name === 'XmlTextNode') {
-    return foundNode.val
-  }
+const findByKey = (xmlConfigTextArr, key) => {
+  const foundNode = findNodeByKey( xmlConfigTextArr, key )
+  if( ! foundNode) return
+
+  const children = reject(foundNode.children, c => {
+    return c.constructor.name === 'XmlCommentNode'
+  })
+  if( some(children, c => c.constructor.name !== 'XmlTextNode')) return
+
+  return children.map( c => c.text ).join('')
+}
+
+const findLineByKey = (xmlConfigText, key) => {
+  const foundNode = findNodeByKey([xmlConfigText], key )
+  if( ! foundNode ) return
+
+  return foundNode.line + 1
 }
 
 const getDistanceBetweenOpenCloseTag = (el) => {
@@ -77,4 +92,5 @@ module.exports = {
   getUnionedKeyArr,
   findByLine,
   findByKey,
+  findLineByKey,
 }

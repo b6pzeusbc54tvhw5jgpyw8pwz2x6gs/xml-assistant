@@ -2,7 +2,7 @@
 
 const fs = require('fs')
 const program = require('commander')
-const { findByKey, findByLine } = require('./core')
+const { findByKey, findByLine, findLineByKey } = require('./core')
 require('colors')
 
 const run = (argv) => {
@@ -10,6 +10,7 @@ const run = (argv) => {
     .usage('[option] <xml-config-file-paths>')
     .option('-k, --key [key]', 'find text value by dot notation path')
     .option('-l, --line [line]', 'find key path by line number')
+    .option('--find-line', 'find line number by key')
     .on('--help', function() {
       console.log('')
       console.log('Examples:')
@@ -29,7 +30,7 @@ const run = (argv) => {
     process.exit(1)
   }
 
-  const key = program.key
+  const { key, findLine } = program
   const line = Number(program.line)
   if( ! key && ! line ) {
     console.log('error: key or line is required'.red)
@@ -37,7 +38,17 @@ const run = (argv) => {
     process.exit(1)
   }
 
-  if( key ) {
+  if( key && findLine) {
+    if( xmlTextArr.length !== 1 ) {
+      console.error('find-line option need only single xml file')
+      program.outputHelp()
+      process.exit(1)
+    }
+    const foundLine = findLineByKey(xmlTextArr[0], key)
+    foundLine && console.log(`${key}: ${foundLine}`)
+    ! foundLine && console.log(`not found by key: ${key}`)
+    process.exit(0)
+  } else if( key ) {
     const value = findByKey(xmlTextArr, key)
     value && console.log(`${key}: ${value}`)
     ! value && console.log(`not found by key: ${key}`)
