@@ -26,6 +26,19 @@
       redis
     </host>
 		<port>1111</port>
+    <some1>
+      <!-- oewjfoeiwfj -->
+      text1
+    </some1>
+    <some2>
+      text2
+      <!-- oewjfoeiwfj -->
+    </some2>
+    <some3>
+      <!-- oewjfoeiwfj -->
+      text3
+      <!-- oewjfoeiwfj -->
+    </some3>
     <!--
       multi line
       comment

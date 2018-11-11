@@ -5,6 +5,7 @@ const {
   getUnionedKeyArr,
   findByLine,
   findByKey,
+  findLineByKey,
 } = require('../src/core')
 
 const certi = `
@@ -82,12 +83,19 @@ describe("check findByKey", () => {
     expect(findByKey(xmlConfigTextArr, 'certi')).toBe(certi)
   })
 
-  it('can find text value by key in only', () => {
+  it('can find text value by key in only xx', () => {
     expect(findByKey(xmlConfigTextArr, 'only')).toBe(void 0)
     expect(findByKey(xmlConfigTextArr, 'only.dev')).toBe(void 0)
     expect(findByKey(xmlConfigTextArr, 'only.dev.config')).toBe('notice msg')
     expect(findByKey(xmlConfigTextArr, 'only.prd')).toBe(void 0)
     expect(findByKey(xmlConfigTextArr, 'only.prd.config')).toBe('prd notice msg')
+  })
+
+  it('can find text value with comments by key', () => {
+    expect(findByKey(xmlConfigTextArr, 'redis')).toBe(void 0)
+    expect(findByKey(xmlConfigTextArr, 'redis.some1').trim()).toBe('text1')
+    expect(findByKey(xmlConfigTextArr, 'redis.some2').trim()).toBe('text2')
+    expect(findByKey(xmlConfigTextArr, 'redis.some3').trim()).toBe('text3')
   })
 })
 
@@ -167,6 +175,16 @@ describe("findByLine", () => {
   })
 })
 
+describe("findLineByKey", () => {
+  it('can find line by key path for example.xml', () => {
+    expect(findLineByKey(xmlConfigTextArr[0], 'db')).toBe(5)
+    expect(findLineByKey(xmlConfigTextArr[0], 'db.host')).toBe(7)
+    expect(findLineByKey(xmlConfigTextArr[0], 'db.port')).toBe(8)
+    expect(findLineByKey(xmlConfigTextArr[0], 'db.username')).toBe(9)
+    expect(findLineByKey(xmlConfigTextArr[0], 'db.password')).toBe(10)
+    expect(findLineByKey(xmlConfigTextArr[0], 'aaaa')).toBe(void 0)
+  })
+})
 
 describe("getUnionedKeyArr", () => {
   const xmlText1 = `
