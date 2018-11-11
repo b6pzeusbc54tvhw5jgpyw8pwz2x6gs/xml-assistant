@@ -25,7 +25,9 @@
     "next": "^7.0.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "react-dropzone": "^7.0.1",
     "rebass": "^3.0.0-9",
+    "store": "^2.0.12",
     "styled-components": "^4.0.3",
     "xml2js": "^0.4.19",
     "xmldoc": "^1.1.2"

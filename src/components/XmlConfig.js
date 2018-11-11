@@ -7,21 +7,20 @@ const MonacoEditor = dynamic(import('./MonacoEditor'), { ssr: false })
 
 const ConfigBox = styled(Flex)`
   box-sizing: border-box;
-  height: 200px;
+  height: 300px;
   background-color: rgba(222,222,11,0.4);
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
+  margin-top: 0.5em;
 `
 
 const EditorBox = styled(Box)`
   overflow: hidden;
   box-sizing: border-box;
-  height: 400px;
   background-color: rgba(11,222,200,0.4);
 `
 
 const ToolBox = styled(Box)`
   box-sizing: border-box;
-  height: 200px;
   background-color: rgba(218,11,200,0.4);
 `
 

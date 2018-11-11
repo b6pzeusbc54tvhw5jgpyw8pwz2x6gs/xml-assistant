@@ -2,9 +2,11 @@ import React from 'react'
 import styled, { createGlobalStyle } from 'styled-components'
 import { Flex, Box, Heading } from 'rebass'
 import reject from 'lodash/reject'
+import isObject from 'lodash/isObject'
 import XmlConfig from '../components/XmlConfig'
 import KeySelector from '../components/KeySelector'
 import DropZone from '../components/DropZone'
+import store from '../browser/customStore'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -15,6 +17,10 @@ const GlobalStyle = createGlobalStyle`
 
 const Header = styled(Flex)`
   background-color: rgba(242, 206, 18, 0.6);
+`
+
+const Main = styled(Box)`
+  background-color: rgba(202, 206, 18, 0.6);
 `
 
 class IndexPage extends React.Component {
@@ -34,6 +40,19 @@ class IndexPage extends React.Component {
     this.addXmlConfig = this.addXmlConfig.bind(this)
     this.deleteXmlConfig = this.deleteXmlConfig.bind(this)
     this.setAllXmlConfigKeyPath = this.setAllXmlConfigKeyPath.bind(this)
+  }
+
+  componentDidMount() {
+    const state = store.get('state')
+    if( isObject( state )) {
+      this.setState({
+        xmlConfigArr: state.xmlConfigArr || [],
+      })
+    }
+  }
+
+  componentDidUpdate() {
+    store.set('state', this.state)
   }
 
   addXmlConfig(info) {
@@ -62,23 +81,24 @@ class IndexPage extends React.Component {
         <Header px={4} py={4} alignItems='center'>
           <Heading fontSize={[ 4, 5 ]} color='blue'>Xml Config Reader</Heading>
         </Header>
-        <KeySelector
-          xmlConfigArr={state.xmlConfigArr}
-          setAllXmlConfigKeyPath={this.setAllXmlConfigKeyPath}
-        />
-        {state.xmlConfigArr.map( (xmlConfig,i) =>
-          <XmlConfig
-            key={i}
-            xmlConfig={xmlConfig}
-            deleteXmlConfig={this.deleteXmlConfig}
+        <Main px={3}>
+          <KeySelector
+            xmlConfigArr={state.xmlConfigArr}
+            setAllXmlConfigKeyPath={this.setAllXmlConfigKeyPath}
           />
-        )}
-        {state.xmlConfigArr.length < 1 && (
+          {state.xmlConfigArr.map( (xmlConfig,i) =>
+            <XmlConfig
+              key={i}
+              xmlConfig={xmlConfig}
+              deleteXmlConfig={this.deleteXmlConfig}
+            />
+          )}
           <DropZone addXmlConfig={this.addXmlConfig}/>
-        )}
+        </Main>
       </Box>
     )
   }
 }
 
 export default IndexPage
+
