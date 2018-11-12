@@ -23,7 +23,10 @@ const getDotKeyArr = xmlText => new Promise((resolve,reject) => {
 
 const getUnionedKeyArr = xmlConfigTextArr => {
   const promisedArr = xmlConfigTextArr.map( getDotKeyArr )
-  return Promise.all(promisedArr).then( rArr => union.apply(null,rArr))
+  return Promise.all(promisedArr).then( rArr => {
+    const unionedKeyArr = union.apply(null,rArr)
+    return unionedKeyArr.map( k => k.replace(/\.(\d)(\.|$)/g, '($1)$2'))
+  })
 }
 
 const findNodeInNodeByKey = (node, key) => {

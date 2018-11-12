@@ -228,8 +228,68 @@ describe("getUnionedKeyArr", () => {
   </c>
 </config-root>
   `
+  const xmlText3 = `
+<?xml version="1.0" encoding="UTF-8"?>
+<config-root>
+  <backend>
+    <ip>1.2.3.1</ip>
+    <ip>1.2.3.2</ip>
+    <ip>1.2.3.3</ip>
+    <ip>1.2.3.4</ip>
+  </backend>
+</config-root>
+  `
+  const xmlText4 = `
+<?xml version="1.0" encoding="UTF-8"?>
+<config-root>
+  <infra>
+    <s3>
+      <bucket>a.b.c</bucket>
+      <private>true</private>
+    </s3>
+    <s3>
+      <bucket>a.b.d</bucket>
+      <private>true</private>
+    </s3>
+    <s3>
+      <bucket>a.b.e</bucket>
+      <private>false</private>
+    </s3>
+    <s3>
+      <bucket>s3.b1</bucket>
+      <bucket>s3.b2</bucket>
+      <bucket>s3.b3</bucket>
+      <private>false</private>
+    </s3>
+  </infra>
+</config-root>
+  `
   it('can get unioned key path arr', () => {
-    return expect(getUnionedKeyArr([xmlText1, xmlText2])).resolves.toEqual([ 'a.b', 'c.d', 'c.e' ])
+    return Promise.all([
+      expect(getUnionedKeyArr([xmlText1, xmlText2])).resolves.toEqual([
+        'a.b',
+        'c.d',
+        'c.e',
+      ]),
+      expect(getUnionedKeyArr([xmlText3])).resolves.toEqual([
+        'backend.ip(0)',
+        'backend.ip(1)',
+        'backend.ip(2)',
+        'backend.ip(3)',
+      ]),
+      expect(getUnionedKeyArr([xmlText4])).resolves.toEqual([
+        'infra.s3(0).bucket',
+        'infra.s3(0).private',
+        'infra.s3(1).bucket',
+        'infra.s3(1).private',
+        'infra.s3(2).bucket',
+        'infra.s3(2).private',
+        'infra.s3(3).bucket(0)',
+        'infra.s3(3).bucket(1)',
+        'infra.s3(3).bucket(2)',
+        'infra.s3(3).private',
+      ]),
+    ])
   })
 })
 
