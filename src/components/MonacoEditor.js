@@ -36,7 +36,7 @@ class MonacoEditor extends React.Component {
       language: 'xml',
       theme: 'myTheme',
     })
-    this.props.onRef(this.editor)
+    this.props.onCreateEditor(this.editor)
   }
   /*
   componentDidUpdate(prevProps, prevState) {

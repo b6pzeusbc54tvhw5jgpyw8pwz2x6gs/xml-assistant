@@ -72,7 +72,7 @@ class IndexPage extends React.Component {
   addXmlConfig(info) {
     const id = uniqid('xmlConfig:')
     const { name, text, size } = info
-    const xmlConfig = { id, name, text, size, keyPath: '', cursor: -1 }
+    const xmlConfig = { id, name, text, size, keyPath: '', lineNumber: -1 }
     this.setState({ xmlConfigArr: [ ...this.state.xmlConfigArr, xmlConfig ]})
   }
   resetAll() {
