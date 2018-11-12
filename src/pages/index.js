@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import { Flex, Box, Heading } from 'rebass'
 import reject from 'lodash/reject'
 import isObject from 'lodash/isObject'
+import findIndex from 'lodash/findIndex'
 import XmlConfig from '../components/XmlConfig'
 import KeySelector from '../components/KeySelector'
 import DropZone from '../components/DropZone'
@@ -52,6 +53,7 @@ class IndexPage extends React.Component {
     this.deleteXmlConfig = this.deleteXmlConfig.bind(this)
     this.setAllXmlConfigKeyPath = this.setAllXmlConfigKeyPath.bind(this)
     this.resetAll = this.resetAll.bind(this)
+    this.setXmlConfig = this.setXmlConfig.bind(this)
   }
 
   componentDidMount() {
@@ -92,7 +94,14 @@ class IndexPage extends React.Component {
       xmlConfigArr: xmlConfigArr.map( xc => ({ ...xc, keyPath })),
     })
   }
+  setXmlConfig(id, xmlConfig) {
+    const idx = findIndex(this.state.xmlConfigArr, xc => xc.id === id )
+    if( idx < 0 ) return
 
+    const xmlConfigArr = [ ...this.state.xmlConfigArr ]
+    xmlConfigArr[idx] = xmlConfig
+    this.setState({ xmlConfigArr })
+  }
   render() {
     const { state } = this
     return (
@@ -118,6 +127,7 @@ class IndexPage extends React.Component {
               key={xmlConfig.id}
               xmlConfig={xmlConfig}
               deleteXmlConfig={this.deleteXmlConfig}
+              setXmlConfig={this.setXmlConfig}
             />
           )}
           <DropZone addXmlConfig={this.addXmlConfig}/>

@@ -8,17 +8,35 @@ const Box = styled.div`
   width: 100%;
 `
 
+// https://microsoft.github.io/monaco-editor/playground.html
+
 class MonacoEditor extends React.Component {
   constructor(props) {
     super(props)
-    this.monacoRef = React.createRef()
+    this.editorRef = React.createRef()
   }
   componentDidMount() {
-    this.editor = monaco.editor.create( this.monacoRef.current, {
+    monaco.editor.defineTheme('myTheme', {
+      base: 'vs',
+      inherit: true,
+      rules: [{ background: 'EDF9FA' }],
+      colors: {
+        'editor.foreground': '#000000',
+        'editor.background': '#EDF9FA',
+        'editorCursor.foreground': '#8B0000',
+        'editor.lineHighlightBackground': '#0000FF20',
+        'editorLineNumber.foreground': '#008800',
+        'editor.selectionBackground': '#88000030',
+        'editor.inactiveSelectionBackground': '#88000015',
+      },
+    })
+    // monaco.editor.setTheme('myTheme')
+    this.editor = monaco.editor.create( this.editorRef.current, {
       value: this.props.text,
       language: 'xml',
-      theme: 'vs-light',
+      theme: 'myTheme',
     })
+    this.props.onRef(this.editor)
   }
   /*
   componentDidUpdate(prevProps, prevState) {
@@ -30,7 +48,7 @@ class MonacoEditor extends React.Component {
   render() {
     const { props } = this
     return (
-      <Box ref={this.monacoRef}/>
+      <Box ref={this.editorRef}/>
     )
   }
 }
