@@ -1,7 +1,10 @@
 module.exports = {
   parser: 'babel-eslint',
-  extends: ["standard"],
-  plugins: ['react'],
+  extends: [
+    // "eslint:recommended",
+    "standard",
+    "plugin:react/recommended",
+  ],
   rules: {
     "space-before-function-paren": 'off',
     "keyword-spacing": 'off',
@@ -24,15 +27,23 @@ module.exports = {
     "padded-blocks": 'warn',
 
     "standard/object-curly-even-spacing": 'off',
-    "react/jsx-uses-vars": ['warn'],
-    "react/jsx-no-undef": ['error'],
   },
+  "settings": {
+    "react": {
+      "createClass": "createReactClass",
+      "pragma": "React",
+      "version": require('./package.json').dependencies.react.replace(/^[\^~]/,''),
+      "flowVersion": "0.53",
+    },
+    "propWrapperFunctions": [ "forbidExtraProps" ]
+  },
+
   overrides: [
     {
       files: ["*.test.js"],
       globals: require('eslint-plugin-jest').environments.globals.globals,
       rules: require('eslint-plugin-jest').rules,
-    }
+    },
   ],
 };
 
